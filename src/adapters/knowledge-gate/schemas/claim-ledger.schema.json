@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "claims"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "4.0"
+      ]
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "source_id",
+          "text",
+          "source_fidelity",
+          "external_truth",
+          "risk",
+          "actionable",
+          "status",
+          "previous_text"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "source_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_fidelity": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "unsupported",
+              "uncertain",
+              "not_checked"
+            ]
+          },
+          "external_truth": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "unsupported",
+              "uncertain",
+              "not_checked",
+              "verified"
+            ]
+          },
+          "risk": {
+            "type": "string",
+            "enum": [
+              "low",
+              "financial",
+              "legal",
+              "medical",
+              "high"
+            ]
+          },
+          "actionable": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "downgraded",
+              "rejected"
+            ]
+          },
+          "previous_text": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

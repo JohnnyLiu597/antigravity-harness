@@ -1,0 +1,121 @@
+# ============================================================
+# antigravity-harness .gitignore
+# Three-boundary isolation: source / runtime / private state
+# ============================================================
+
+# ── Antigravity / Gemini Runtime Private State ──────────────
+# These MUST NEVER appear in the published source package.
+src/**/brain/
+src/**/conversations/
+src/**/*.pb
+src/**/*.pbtxt
+src/**/config.json
+src/**/mcp_config.json
+src/**/installation_id
+src/**/feishu-bridge-state.json
+src/**/antigravity_state.pbtxt
+src/**/skills.txt
+src/**/.gemini-private
+
+# ── Runtime Secrets & Machine-Local State ───────────────────
+auth.json
+*.sqlite*
+*.bak
+*.bak-*
+*.lock
+*.pyc
+__pycache__/
+.gemini-trash/
+
+# ── Source Payload Runtime Exclusions ───────────────────────
+src/auth.json
+src/config.toml
+src/**/config.toml
+src/plugins/
+src/**/plugins/
+src/**/plugin/
+src/cache/
+src/caches/
+src/**/cache/
+src/**/caches/
+src/sessions/
+src/archived_sessions/
+src/**/session/
+src/**/sessions/
+src/**/archived_sessions/
+src/log/
+src/logs/
+src/hook-logs/
+src/**/log/
+src/**/logs/
+src/**/hook-logs/
+src/browser/
+src/browser-state/
+src/browser_state/
+src/**/browser/
+src/**/browser-state/
+src/**/browser_state/
+src/.sandbox/
+src/.sandbox-bin/
+src/.sandbox-secrets/
+src/.tmp/
+src/tmp/
+src/**/.sandbox/
+src/**/.sandbox-bin/
+src/**/.sandbox-secrets/
+src/**/.tmp/
+src/**/tmp/
+src/harness-health/
+src/harness-changes/
+src/harness-learning/
+src/**/harness-health/
+src/**/harness-changes/
+src/**/harness-learning/
+src/harness-state/
+src/**/harness-state/
+src/harness-evals/runs/
+src/skills.archived/
+src/agents.archived/
+src/backup-*/
+src/**/skills.archived/
+src/**/agents.archived/
+src/**/backups/
+src/**/backup-*/
+src/**/.sync-manifest.json
+src/*.sqlite*
+src/*.bak
+src/**/*.bak-*
+src/**/__pycache__/
+src/**/*.pyc
+
+# ── Antigravity-Specific Runtime Directories ────────────────
+src/**/antigravity-browser-profile/
+src/**/antigravity-cli/
+src/**/antigravity-ide/
+src/**/antigravity-backup/
+src/**/sidecar_data/
+src/**/context_state/
+src/**/crashes/
+src/**/html_artifacts/
+src/**/browser_recordings/
+src/**/implicit/
+src/**/knowledge/
+src/**/prompting/
+src/**/scratch/
+src/**/annotations/
+src/**/bin/
+
+# ── Project-Local Generated Artifacts ───────────────────────
+artifacts/**
+!artifacts/
+!artifacts/.gitkeep
+!artifacts/checks/
+!artifacts/checks/.gitkeep
+!artifacts/sync-manifests/
+!artifacts/sync-manifests/.gitkeep
+
+# ── Editor and OS Noise ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

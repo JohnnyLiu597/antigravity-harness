@@ -1,0 +1,29 @@
+{
+  "antigravity-reliable-control-probe": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "list_dir|view_file|write_to_file|replace_file_content|multi_replace_file_content|run_command|invoke_subagent|manage_subagents",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "hooks\\pre-tool-use.cmd",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "list_dir|view_file|write_to_file|replace_file_content|multi_replace_file_content|run_command|invoke_subagent|manage_subagents",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "hooks\\post-tool-use.cmd",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

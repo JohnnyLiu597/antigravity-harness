@@ -1,0 +1,14 @@
+{
+    "schema_version":  "4.0",
+    "task_id":  "knowledge-fixture",
+    "sources":  [
+                    {
+                        "id":  "s1",
+                        "duration_reliable":  true,
+                        "path":  "original.txt",
+                        "media_type":  "text",
+                        "duration_seconds":  10,
+                        "expected_sha256":  "cc6367267ece74a57946b4e7c2e2be9c3123ce0328695b5b0c9158abddeffa2b"
+                    }
+                ]
+}

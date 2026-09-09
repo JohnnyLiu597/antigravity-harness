@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project agent handoff v1",
+  "type": "object",
+  "required": ["schema", "project_id", "task_id", "revision", "producer_engines", "verification_policy", "required_checks", "acceptance_status", "writer", "evidence"],
+  "properties": {
+    "schema": {"const": "project-agent-handoff-v1"},
+    "project_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "task_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "producer_engines": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["codex", "antigravity"]}},
+    "verification_policy": {"enum": ["codex-targeted", "antigravity-strict"]},
+    "required_checks": {"type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,95}$"}},
+    "acceptance_status": {"const": "unverified"},
+    "writer": {"type": ["object", "null"]},
+    "evidence": {"type": "array", "maxItems": 64, "items": {"type": "object", "required": ["check_id", "path", "sha256", "status"], "properties": {"status": {"const": "reference-only"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}}}
+  },
+  "allOf": [{"if": {"properties": {"producer_engines": {"contains": {"const": "antigravity"}}}}, "then": {"properties": {"verification_policy": {"const": "antigravity-strict"}}}}]
+}

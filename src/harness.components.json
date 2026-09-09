@@ -1,0 +1,295 @@
+{
+  "$schema": "antigravity-harness-components-v2",
+  "version": "4.0.0",
+  "scope": "global",
+  "review_policy": {
+    "component_states": [
+      "proposed",
+      "experimental",
+      "active",
+      "deprecated",
+      "retired"
+    ],
+    "max_experimental_ttl_days": 90,
+    "promotion_requirements": [
+      "Referenced paths exist",
+      "Deterministic verification passes",
+      "Observed evidence matches the declared enforcement mode",
+      "Independent review names residual risk"
+    ]
+  },
+  "components": [
+    {
+      "name": "baseline-rules",
+      "type": "rules",
+      "owner": "harness-maintainer",
+      "purpose": "Keep a small invariant safety and truth baseline without claiming native enforcement.",
+      "compensation_hypothesis": "A small stable baseline reduces drift without imposing a large context tax.",
+      "paths": [
+        "src/AGENTS.md",
+        "src/GEMINI.md"
+      ],
+      "status": "active",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 30,
+      "retirement_criteria": [
+        "Native runtime enforcement replaces the same rules with live evidence."
+      ]
+    },
+    {
+      "name": "governance-skills",
+      "type": "skills",
+      "owner": "harness-maintainer",
+      "purpose": "Provide on-demand recovery, evaluation, context, memory, and orchestration procedures.",
+      "compensation_hypothesis": "On-demand procedures reduce inconsistent reinvention while keeping Tier 0 small.",
+      "paths": [
+        "src/skills"
+      ],
+      "status": "active",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 45,
+      "retirement_criteria": [
+        "A verified native surface supersedes each skill."
+      ]
+    },
+    {
+      "name": "agent-contracts",
+      "type": "agents",
+      "owner": "harness-maintainer",
+      "purpose": "Separate maker, test author, test runner, reviewer, explorer, architect, and auditor authority.",
+      "compensation_hypothesis": "Independent roles reduce correlated self-review and false completion.",
+      "paths": [
+        "src/agents",
+        "src/harness-evals/test-governance-contracts.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "Role separation fails to improve false-completion or scope metrics."
+      ]
+    },
+    {
+      "name": "truth-registry",
+      "type": "verification",
+      "owner": "harness-maintainer",
+      "purpose": "Reject phantom capabilities, unsupported verified claims, and stale components.",
+      "compensation_hypothesis": "Truthful manifests prevent authoritative documentation from causing optimistic hallucination.",
+      "paths": [
+        "src/harness.capabilities.json",
+        "src/harness.components.json",
+        "src/scripts/verify-manifest-integrity.ps1",
+        "src/scripts/audit-harness-components.ps1",
+        "src/scripts/probe-native-surfaces.ps1",
+        "src/harness-evals/test-truth-reset.ps1"
+      ],
+      "status": "active",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "An equivalent runtime-owned capability registry provides stronger evidence."
+      ]
+    },
+    {
+      "name": "bounded-execution-control",
+      "type": "workflow",
+      "owner": "harness-maintainer",
+      "purpose": "Constrain scope, persist resumable state, fingerprint workspaces, and make command evidence bounded.",
+      "compensation_hypothesis": "Explicit contracts and monotonic state reduce overreach, drift, and duplicate side effects.",
+      "paths": [
+        "src/schemas/task-contract.schema.json",
+        "src/schemas/job-state.schema.json",
+        "src/schemas/tool-event.schema.json",
+        "src/scripts/new-governed-task.ps1",
+        "src/scripts/new-task-contract.ps1",
+        "src/scripts/test-task-scope.ps1",
+        "src/scripts/new-job-state.ps1",
+        "src/scripts/update-job-state.ps1",
+        "src/scripts/get-workspace-fingerprint.ps1",
+        "src/scripts/invoke-safe-command.ps1",
+        "src/harness-evals/test-control-plane.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "Behavioral evals show no improvement in overreach, retry, or resume safety."
+      ]
+    },
+    {
+      "name": "verification-closure",
+      "type": "verification",
+      "owner": "harness-maintainer",
+      "purpose": "Bind checks to current inputs and reserve verified for a deterministic completion gate.",
+      "compensation_hypothesis": "Causal evidence and independent authority reduce false completion and stale verification.",
+      "paths": [
+        "src/schemas/verification-envelope.schema.json",
+        "src/schemas/completion-claim.schema.json",
+        "src/scripts/detect-project-test-surface.ps1",
+        "src/scripts/invoke-verification-envelope.ps1",
+        "src/scripts/new-completion-claim.ps1",
+        "src/scripts/invoke-completion-gate.ps1",
+        "src/harness-evals/test-verification-plane.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "Behavioral evals show no improvement in false-completion or evidence freshness."
+      ]
+    },
+    {
+      "name": "attempt-truth",
+      "type": "workflow",
+      "owner": "harness-maintainer",
+      "purpose": "Persist every attempt and generate completion reports without model-selected omission.",
+      "compensation_hypothesis": "A deterministic ledger prevents final summaries from hiding failed or rejected attempts.",
+      "paths": [
+        "src/schemas/attempt-ledger.schema.json",
+        "src/scripts/new-attempt-record.ps1",
+        "src/scripts/update-attempt-record.ps1",
+        "src/scripts/render-completion-report.ps1",
+        "src/harness-evals/test-attempt-ledger.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "Attempt reports fail to predict omitted failures in live canaries or a trusted native ledger supersedes them."
+      ]
+    },
+    {
+      "name": "tier1-policy-routing",
+      "type": "context",
+      "owner": "harness-maintainer",
+      "purpose": "Keep GEMINI.md small and route qualifying work to the reliable-maker-control skill.",
+      "compensation_hypothesis": "Moving the full policy pack out of global injection reduces context tax without weakening complex-task guidance.",
+      "paths": [
+        "src/GEMINI.md",
+        "src/skills/reliable-maker-control/SKILL.md",
+        "src/harness-evals/test-governance-contracts.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 7,
+      "retirement_criteria": [
+        "Restart canaries show the skill is never loaded when required or global context savings do not materialize."
+      ]
+    },
+    {
+      "name": "execution-provenance-audit",
+      "type": "verification",
+      "owner": "harness-maintainer",
+      "purpose": "Require governed TaskRoot identity and canonical contract, ledger, report, claim, envelope, test-result, and decision producer metadata.",
+      "compensation_hypothesis": "Producer hashes and required-chain audits expose phantom execution reports that omit contract, envelope, claim, or decision artifacts.",
+      "paths": [
+        "src/scripts/new-governed-task.ps1",
+        "src/scripts/new-completion-claim.ps1",
+        "src/scripts/audit-governed-execution.ps1",
+        "src/harness-evals/test-execution-provenance.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-05",
+      "review_cadence_days": 7,
+      "retirement_criteria": [
+        "A native trusted execution log provides stronger unforgeable provenance."
+      ]
+    },
+    {
+      "name": "behavioral-evals",
+      "type": "evals",
+      "owner": "harness-maintainer",
+      "purpose": "Run repeatable truth, scope, recovery, verification, and governance regressions.",
+      "compensation_hypothesis": "Repeatable failure cases prevent documentation-only improvements from being mistaken for reliability gains.",
+      "paths": [
+        "src/harness-evals"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-04",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "The suite fails to predict real Antigravity regressions or is superseded by a stronger native eval surface."
+      ]
+    },
+    {
+      "name": "desktop-hook-probe",
+      "type": "hook",
+      "owner": "harness-maintainer",
+      "purpose": "Antigravity Desktop opt-in guarded Binding, privacy-bounded Tool Operations, conservative unknown results and read-only recovery audit; strict unavailable.",
+      "compensation_hypothesis": "Host-issued session/step metadata with explicit current authorization and durable observations raises reliability without claiming same-user isolation.",
+      "paths": [
+        "src/desktop-hooks/antigravity-reliable-control",
+        "src/scripts/audit-desktop-hook-session.ps1",
+        "src/scripts/new-desktop-session-binding.ps1",
+        "deploy/install-desktop-hook-plugin.ps1",
+        "src/harness-evals/test-desktop-hook-probe.ps1",
+        "src/scripts/register-desktop-project.ps1",
+        "src/scripts/resolve-desktop-control-library.ps1",
+        "src/harness-evals/test-v4-policy.ps1",
+        "src/harness-evals/test-v4-control.ps1",
+        "src/harness-evals/test-v4-events.ps1"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-09",
+      "review_cadence_days": 7,
+      "retirement_criteria": [
+        "The desktop build does not load the documented hook contract or a safer host-native policy surface supersedes it."
+      ]
+    },
+    {
+      "name": "sync-boundaries",
+      "type": "deployment",
+      "owner": "harness-maintainer",
+      "purpose": "Transactionally synchronize maintainable payloads while excluding runtime-private state.",
+      "compensation_hypothesis": "Explicit source/runtime boundaries prevent credential leaks and accidental runtime corruption.",
+      "paths": [
+        "deploy/sync-to-runtime.ps1",
+        "deploy/sync-from-runtime.ps1",
+        "deploy/test-sync-boundaries.ps1",
+        "deploy/verify-package.ps1"
+      ],
+      "status": "active",
+      "status_since": "2026-09-03",
+      "review_cadence_days": 30,
+      "retirement_criteria": [
+        "A native transactional package manager provides equivalent boundary and rollback guarantees."
+      ]
+    },
+    {
+      "name": "knowledge-gate-adapter",
+      "type": "verification",
+      "owner": "harness-maintainer",
+      "purpose": "Optional source-fidelity and canonical Final Claim Set mechanical gate; separate from global runtime and real vault installation.",
+      "compensation_hypothesis": "Deterministic original hashes and propagation checks catch known false-completion patterns; native semantics remain an explicit separate evidence layer.",
+      "paths": [
+        "src/adapters/knowledge-gate",
+        "src/harness-evals/test-v4-knowledge.ps1",
+        "docs/v4-knowledge-gate.md"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-09",
+      "review_cadence_days": 14,
+      "retirement_criteria": [
+        "A host-native project knowledge gate provides stronger independently tested guarantees."
+      ]
+    },
+    {
+      "type": "scripts",
+      "owner": "harness-maintainer",
+      "purpose": "Transfer project ownership and exact evidence without lowering Antigravity acceptance.",
+      "compensation_hypothesis": "A shared bounded handoff avoids lost context while asymmetric adapters preserve strict execution.",
+      "paths": [
+        "src/scripts/invoke-agent-handoff.ps1",
+        "src/scripts/invoke-antigravity-handoff.ps1",
+        "src/skills/cross-engine-handoff"
+      ],
+      "status": "experimental",
+      "status_since": "2026-09-10",
+      "retirement_criteria": [
+        "Native cross-engine coordination replaces this protocol with equivalent scope and evidence guarantees."
+      ],
+      "name": "asymmetric-collaboration",
+      "review_cadence_days": 30
+    }
+  ]
+}

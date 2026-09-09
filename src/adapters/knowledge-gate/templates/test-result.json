@@ -1,0 +1,18 @@
+{
+  "schema_version": "4.0",
+  "task_id": "knowledge-fixture",
+  "status": "blocked",
+  "mechanical_checks": "failed",
+  "semantic_verification": "blocked",
+  "trusted_external_authority": "unavailable",
+  "generated_at": "2026-09-08T18:46:32.5478275Z",
+  "input_hashes": [],
+  "source_observations": [],
+  "issues": [
+    {
+      "code": "template_not_executed",
+      "reference": "",
+      "severity": "blocked"
+    }
+  ]
+}

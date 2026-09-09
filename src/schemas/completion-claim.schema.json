@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity-harness.local/schemas/completion-claim.schema.json",
+  "title": "Antigravity Completion Claim",
+  "description": "A request for completion arbitration. Source-only evidence remains checking until trusted external checker attestation exists.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "producer_script_sha256",
+    "claim_id",
+    "objective_sha256",
+    "claim_summary",
+    "actor",
+    "requested_status",
+    "verification",
+    "attempt_history",
+    "checker",
+    "acceptance_criteria",
+    "remaining_uncertainty",
+    "created_at"
+  ],
+  "properties": {
+    "schema": {
+      "const": "antigravity-completion-claim-v1"
+    },
+    "producer_script_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 96
+    },
+    "objective_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "claim_summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "id_sha256"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "id_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "requested_status": {
+      "enum": [
+        "planned",
+        "attempted",
+        "executed",
+        "partial",
+        "passed",
+        "checking",
+        "unverified",
+        "blocked",
+        "verified",
+        "approved"
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "envelope_path",
+        "envelope_sha256"
+      ],
+      "properties": {
+        "envelope_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "envelope_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "attempt_history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ledger_path", "ledger_sha256", "report_path", "report_sha256"],
+      "properties": {
+        "ledger_path": {"type": "string", "minLength": 1, "maxLength": 512},
+        "ledger_sha256": {"$ref": "#/$defs/sha256"},
+        "report_path": {"type": "string", "minLength": 1, "maxLength": 512},
+        "report_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "checker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "independent"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "independent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "status",
+          "evidence_sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "unverified"
+            ]
+          },
+          "evidence_sha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    },
+    "remaining_uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 240
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "actor": {
+            "properties": {
+              "role": {
+                "const": "maker"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requested_status": {
+            "not": {
+              "enum": [
+                "verified",
+                "approved"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "role": {
+      "enum": [
+        "maker",
+        "test-author",
+        "test-runner",
+        "reviewer",
+        "human",
+        "completion-gate"
+      ]
+    }
+  }
+}

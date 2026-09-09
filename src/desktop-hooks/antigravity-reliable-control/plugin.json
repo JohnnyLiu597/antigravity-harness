@@ -1,0 +1,5 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "antigravity-reliable-control",
+  "description": "Antigravity Desktop v4 opt-in guarded admission and privacy-bounded Tool Operations. Strict isolation is unavailable; local state is not attestation."
+}

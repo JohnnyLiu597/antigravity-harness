@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity-harness.local/schemas/job-state.schema.json",
+  "title": "Antigravity Harness Job State v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "job_id",
+    "contract_id",
+    "contract_path",
+    "project_root",
+    "objective_sha256",
+    "attempt_id",
+    "state",
+    "version",
+    "created_at",
+    "updated_at",
+    "last_progress",
+    "next_action",
+    "blockers",
+    "stop_reason",
+    "verification",
+    "history"
+  ],
+  "properties": {
+    "schema": {
+      "const": "antigravity-harness-job-state-v2"
+    },
+    "job_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contract_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objective_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "state": {
+      "$ref": "#/$defs/state"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_progress": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2048
+    },
+    "next_action": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2048
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      }
+    },
+    "stop_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1024
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verified_commit",
+        "workspace_fingerprint",
+        "artifact"
+      ],
+      "properties": {
+        "verified_commit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "workspace_fingerprint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifact": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2048
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "timestamp",
+          "from",
+          "to",
+          "summary"
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "from": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/state"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "to": {
+            "$ref": "#/$defs/state"
+          },
+          "summary": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2048
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "state": {
+      "enum": [
+        "drafted",
+        "approved",
+        "running",
+        "checking",
+        "waiting_approval",
+        "verified",
+        "blocked",
+        "stopped"
+      ]
+    }
+  }
+}

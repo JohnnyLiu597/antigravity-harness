@@ -1,0 +1,8 @@
+{
+  "fixture_kind": "negative-capability",
+  "media_type": "image",
+  "original_available": false,
+  "native_original_read": false,
+  "expected_gate": "blocked",
+  "note": "No actual image semantic validation has been performed. Supply a user-authorized original in the isolated desktop acceptance run."
+}

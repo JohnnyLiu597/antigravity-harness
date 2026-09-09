@@ -1,0 +1,19 @@
+{
+    "schema_version":  "4.0",
+    "task_id":  "knowledge-fixture",
+    "claims":  [
+                   {
+                       "source_fidelity":  "supported",
+                       "id":  "c1",
+                       "text":  "The sample has two sections.",
+                       "external_truth":  "not_checked",
+                       "previous_text":  [
+
+                                         ],
+                       "actionable":  false,
+                       "source_id":  "s1",
+                       "status":  "accepted",
+                       "risk":  "low"
+                   }
+               ]
+}

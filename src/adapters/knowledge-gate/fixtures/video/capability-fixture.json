@@ -1,0 +1,10 @@
+{
+  "fixture_kind": "negative-capability",
+  "media_type": "video",
+  "original_available": false,
+  "native_original_read": false,
+  "duration_reliable": false,
+  "complete_transcript": false,
+  "expected_gate": "blocked",
+  "note": "No decoded video, reliable duration or transcript is bundled. Do not infer content from this descriptor or a title."
+}

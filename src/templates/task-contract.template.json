@@ -1,0 +1,46 @@
+{
+  "schema": "antigravity-harness-task-contract-v2",
+  "contract_id": "replace-with-stable-contract-id",
+  "created_at": "2000-01-01T00:00:00.0000000Z",
+  "status": "draft",
+  "objective": "Describe one bounded, verifiable objective.",
+  "non_goals": [
+    "Do not expand the requested architecture."
+  ],
+  "scope": {
+    "project_root": "replace-at-creation-time",
+    "access": "write",
+    "allowed_paths": [
+      "src/",
+      "tests/"
+    ],
+    "denied_paths": [
+      "secrets/",
+      "production/"
+    ]
+  },
+  "change_budget": {
+    "max_files": 5,
+    "max_added_lines": 250,
+    "dependency_changes": false,
+    "architecture_changes": false
+  },
+  "required_checks": [
+    "targeted tests",
+    "syntax or type check"
+  ],
+  "approval_triggers": [
+    "scope_expansion",
+    "dependency_change",
+    "architecture_change",
+    "destructive_action",
+    "external_write",
+    "deployment",
+    "publication"
+  ],
+  "baseline": {
+    "workspace_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "files": [],
+    "excluded_roots": [".git", "artifacts", "harness-state", ".gemini-trash", ".codex-trash", "node_modules", "__pycache__"]
+  }
+}

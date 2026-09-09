@@ -1,0 +1,103 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "claim_ids",
+    "publication_status",
+    "completed_at",
+    "required_sections",
+    "wiki_links",
+    "attachments",
+    "surfaces"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "4.0"
+      ]
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]+$"
+      }
+    },
+    "publication_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "restricted",
+        "publishable"
+      ]
+    },
+    "completed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_sections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "wiki_links": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "path",
+          "claim_ids"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "body",
+              "card",
+              "diagram"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        }
+      },
+      "minItems": 1
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

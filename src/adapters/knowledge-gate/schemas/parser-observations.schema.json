@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "input_source_ids",
+    "output_requirements",
+    "observations"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "4.0"
+      ]
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "input_source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]+$"
+      }
+    },
+    "output_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "observed_sha256",
+          "original_read",
+          "capability",
+          "full_coverage",
+          "complete_transcript",
+          "transcript_path",
+          "timestamps"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "observed_sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          },
+          "original_read": {
+            "type": "boolean"
+          },
+          "capability": {
+            "type": "string",
+            "enum": [
+              "text",
+              "native_multimodal",
+              "unavailable"
+            ]
+          },
+          "full_coverage": {
+            "type": "boolean"
+          },
+          "complete_transcript": {
+            "type": "boolean"
+          },
+          "transcript_path": {
+            "type": "string"
+          },
+          "timestamps": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

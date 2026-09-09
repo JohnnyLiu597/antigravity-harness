@@ -1,0 +1,41 @@
+{
+  "surfaces": [
+    {
+      "path": "body.md",
+      "claim_ids": [
+        "c1"
+      ],
+      "kind": "body"
+    },
+    {
+      "path": "card.md",
+      "claim_ids": [
+        "c1"
+      ],
+      "kind": "card"
+    },
+    {
+      "path": "diagram.md",
+      "claim_ids": [
+        "c1"
+      ],
+      "kind": "diagram"
+    }
+  ],
+  "schema_version": "4.0",
+  "attachments": [
+    "attachment.txt"
+  ],
+  "publication_status": "draft",
+  "required_sections": [
+    "Summary"
+  ],
+  "task_id": "knowledge-fixture",
+  "wiki_links": [
+    "Related"
+  ],
+  "completed_at": "2000-01-01T00:00:00Z",
+  "claim_ids": [
+    "c1"
+  ]
+}

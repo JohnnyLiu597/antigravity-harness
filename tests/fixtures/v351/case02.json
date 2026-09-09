@@ -1,0 +1,111 @@
+{
+    "expected_output_sha256":  "8887486252986446ed9173e5128cd569506e86ee19aef603f67d36f5ac4e8402",
+    "source":  "synthetic-public-v351-correlation-shape; original private evidence retained separately",
+    "conversation_id":  "00000000-0000-4000-8000-000000000351",
+    "records":  [
+                    {
+                        "phase":  "pre",
+                        "data":  {
+                                     "schema":  "antigravity-hook-pre-correlation-v1",
+                                     "recorded_at":  "2000-01-01T00:00:00Z",
+                                     "conversation_id_sha256":  "2e27c89fe84c78466612bb4a173bf715c266d6e80cecfe77895107edcc396ec8",
+                                     "correlation_id_sha256":  "e8db3db78f992850274e855342fe75b4e0c66fe72d9d9ea048ca9c9e272dad8c",
+                                     "step_idx":  6,
+                                     "tool_name":  "write_to_file",
+                                     "tool_args_sha256":  "e68dbd72457525e9c4c77d8786bac4c7ceee6adf7e1511faf1ca578eea2e6d72",
+                                     "target_path_sha256":  [
+                                                                "1b9e164e096f88a59b6d335fd699a765df25f2ce464bb1d341e9de50dd30b8f8"
+                                                            ],
+                                     "target_path_count":  1,
+                                     "requested_subagent_count":  0,
+                                     "binding_status":  "active",
+                                     "bound_task_root_sha256":  "e3af5d5d43bb4f2aa1dd408b604ff863a600c8c97544d57318fc02387c117810",
+                                     "bound_logical_task_id_sha256":  "50250639ed960cc22fee6e22d6da7117b21b9205f44a2a423f2b9c3d305a6bf0",
+                                     "bound_attempt_id_sha256":  "3b5a463a79e3e066119ff5bbdda04a41b2326823c4cfdf7ade9a25f2250dee2c",
+                                     "bound_role":  "maker",
+                                     "decision":  "allow",
+                                     "reason_code":  "session-binding-active",
+                                     "pre_event_sha256":  "ca12b467bcac6bd33a44c655b08ba9aa25660f53f5f2d93cf6cad7598ab75145"
+                                 },
+                        "source_sha256":  "2cdbfe75d76d3a39bb3040b0a176f427f9294c743300d2020934ce6086886e12"
+                    },
+                    {
+                        "phase":  "pre",
+                        "data":  {
+                                     "schema":  "antigravity-hook-pre-correlation-v1",
+                                     "recorded_at":  "2000-01-01T00:00:00Z",
+                                     "conversation_id_sha256":  "2e27c89fe84c78466612bb4a173bf715c266d6e80cecfe77895107edcc396ec8",
+                                     "correlation_id_sha256":  "a8ad5012327f5845297da390cf040c6cc8d5519f596f0d64e804dba8bf9dfc5c",
+                                     "step_idx":  2,
+                                     "tool_name":  "write_to_file",
+                                     "tool_args_sha256":  "687f7b718c194e6449a9ac290c0bdb541dfcc9991ca6d47d09fa3ba9df0bf591",
+                                     "target_path_sha256":  [
+                                                                "1b9e164e096f88a59b6d335fd699a765df25f2ce464bb1d341e9de50dd30b8f8"
+                                                            ],
+                                     "target_path_count":  1,
+                                     "requested_subagent_count":  0,
+                                     "binding_status":  "missing",
+                                     "bound_task_root_sha256":  null,
+                                     "bound_logical_task_id_sha256":  null,
+                                     "bound_attempt_id_sha256":  null,
+                                     "bound_role":  null,
+                                     "decision":  "deny",
+                                     "reason_code":  "session-binding-missing",
+                                     "pre_event_sha256":  "5c5a49d0a531f07eb118500057f3aa65adbad87d4bbd9d58194122ecce3b5d32"
+                                 },
+                        "source_sha256":  "90e80527f2e4d03cb2318517e51a40e188ef9c727019641e7b31f253d42570f4"
+                    },
+                    {
+                        "phase":  "pre",
+                        "data":  {
+                                     "schema":  "antigravity-hook-pre-correlation-v1",
+                                     "recorded_at":  "2000-01-01T00:00:00Z",
+                                     "conversation_id_sha256":  "2e27c89fe84c78466612bb4a173bf715c266d6e80cecfe77895107edcc396ec8",
+                                     "correlation_id_sha256":  "a8aae46d0972a8effdd223c74bab6ca0554df38dcdea253b886bb78efc5a13ce",
+                                     "step_idx":  10,
+                                     "tool_name":  "replace_file_content",
+                                     "tool_args_sha256":  "b3184ca18ad9ff1c3e617d9fec8f8a770351e067a929bbc060f9f08c383abd55",
+                                     "target_path_sha256":  [
+                                                                "1b9e164e096f88a59b6d335fd699a765df25f2ce464bb1d341e9de50dd30b8f8"
+                                                            ],
+                                     "target_path_count":  1,
+                                     "requested_subagent_count":  0,
+                                     "binding_status":  "attempt_not_running",
+                                     "bound_task_root_sha256":  null,
+                                     "bound_logical_task_id_sha256":  null,
+                                     "bound_attempt_id_sha256":  null,
+                                     "bound_role":  null,
+                                     "decision":  "deny",
+                                     "reason_code":  "session-binding-attempt-not-running",
+                                     "pre_event_sha256":  "325175b2db1a9011709b7f0a708d947899d6e4c3e0ae9831e486e47c390c1b0c"
+                                 },
+                        "source_sha256":  "89a50662a5affa5792e1f27cfa8921f489f7f694e2dee66b939ecd093d8d5aff"
+                    },
+                    {
+                        "phase":  "post",
+                        "data":  {
+                                     "schema":  "antigravity-hook-post-correlation-v1",
+                                     "completed_at":  "2000-01-01T00:00:00Z",
+                                     "conversation_id_sha256":  "2e27c89fe84c78466612bb4a173bf715c266d6e80cecfe77895107edcc396ec8",
+                                     "correlation_id_sha256":  "e8db3db78f992850274e855342fe75b4e0c66fe72d9d9ea048ca9c9e272dad8c",
+                                     "step_idx":  6,
+                                     "correlation_status":  "matched",
+                                     "pre_event_sha256":  "ca12b467bcac6bd33a44c655b08ba9aa25660f53f5f2d93cf6cad7598ab75145",
+                                     "tool_name":  "write_to_file",
+                                     "pre_decision":  "allow",
+                                     "binding_status":  "active",
+                                     "bound_task_root_sha256":  "e3af5d5d43bb4f2aa1dd408b604ff863a600c8c97544d57318fc02387c117810",
+                                     "bound_attempt_id_sha256":  "3b5a463a79e3e066119ff5bbdda04a41b2326823c4cfdf7ade9a25f2250dee2c",
+                                     "outcome":  "succeeded",
+                                     "outcome_source":  "hook-completion",
+                                     "error_present":  false,
+                                     "error_sha256":  null,
+                                     "tool_result_observed":  false,
+                                     "tool_result_sha256":  null,
+                                     "process_exit_code_observed":  null
+                                 },
+                        "source_sha256":  "4c2b722f9b9ea17627456f21955044f8fbd2c95b45be104d80723f5b37073cea"
+                    }
+                ],
+    "schema":  "antigravity-historical-replay-v1"
+}

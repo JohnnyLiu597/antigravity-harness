@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity-harness.local/schemas/attempt-ledger.schema.json",
+  "title": "Antigravity Attempt Ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "producer_script_sha256", "last_update_script_sha256", "task_id", "project_root", "version", "created_at", "updated_at", "attempts"],
+  "properties": {
+    "schema": {"const": "antigravity-harness-attempt-ledger-v1"},
+    "producer_script_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "last_update_script_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "task_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"},
+    "project_root": {"type": ["string", "null"]},
+    "version": {"type": "integer", "minimum": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["attempt_id", "sequence", "operation_id", "input_sha256", "workspace_before_sha256", "workspace_before", "workspace_after_sha256", "changed_paths", "status", "started_at", "completed_at", "exit_code", "failure_class", "side_effects_observed", "recovery_action", "evidence_artifact", "evidence_sha256"],
+        "properties": {
+          "attempt_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"},
+          "sequence": {"type": "integer", "minimum": 1},
+          "operation_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"},
+          "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "workspace_before_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+          "workspace_before": {"type": "array"},
+          "workspace_after_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+          "changed_paths": {"type": "array", "items": {"type": "string"}},
+          "status": {"enum": ["running", "passed", "failed", "rejected", "blocked", "stopped"]},
+          "started_at": {"type": "string", "format": "date-time"},
+          "completed_at": {"type": ["string", "null"], "format": "date-time"},
+          "exit_code": {"type": ["integer", "null"]},
+          "failure_class": {"type": ["string", "null"]},
+          "side_effects_observed": {"type": "boolean"},
+          "recovery_action": {"type": ["string", "null"], "maxLength": 240},
+          "evidence_artifact": {"type": ["string", "null"], "maxLength": 512}
+          ,"evidence_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    }
+  }
+}

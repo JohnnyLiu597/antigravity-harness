@@ -1,0 +1,438 @@
+{
+  "$schema": "antigravity-harness-capabilities-v2",
+  "version": "4.0.0",
+  "scope": "global",
+  "metadata": {
+    "runtime": "Google Antigravity / Gemini CLI",
+    "platform": "Windows-first",
+    "shell": "PowerShell",
+    "runtime_directory": "$env:USERPROFILE\\.gemini",
+    "private_marker": ".gemini-private",
+    "private_state_root": "$env:USERPROFILE\\.gemini\\harness-state",
+    "trash_directory": ".gemini-trash",
+    "truth_rule": "No declared capability is treated as implemented, available, or verified without matching evidence."
+  },
+  "allowed_states": {
+    "implementation_status": [
+      "declared",
+      "implemented",
+      "verified"
+    ],
+    "availability": [
+      "unverified",
+      "available",
+      "unavailable"
+    ],
+    "enforcement_mode": [
+      "native-enforced",
+      "script-enforced",
+      "human-enforced",
+      "policy-only",
+      "unverified"
+    ]
+  },
+  "completion_truth": {
+    "states": [
+      "planned",
+      "attempted",
+      "executed",
+      "partial",
+      "passed",
+      "checking",
+      "unverified",
+      "blocked",
+      "verified",
+      "approved"
+    ],
+    "maker_may_issue": [
+      "planned",
+      "attempted",
+      "executed",
+      "partial",
+      "passed",
+      "checking",
+      "unverified",
+      "blocked"
+    ],
+    "gate_only": [
+      "verified"
+    ],
+    "human_only": [
+      "approved"
+    ]
+  },
+  "capabilities": [
+    {
+      "id": "truth-registry",
+      "description": "Rejects phantom capability references, unsupported verified claims, and stale component metadata.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/scripts/verify-manifest-integrity.ps1",
+        "evidence": [
+          "src/harness-evals/test-truth-reset.ps1"
+        ]
+      }
+    },
+    {
+      "id": "native-surface-probe",
+      "description": "Reports static runtime evidence without claiming that in-app tools or model routing are available.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/scripts/probe-native-surfaces.ps1",
+        "evidence": [
+          "src/harness-evals/test-truth-reset.ps1"
+        ]
+      }
+    },
+    {
+      "id": "source-runtime-boundary",
+      "description": "Keeps credentials, conversations, databases, private markers, caches, and generated state out of the source payload.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "deploy/test-sync-boundaries.ps1",
+        "evidence": [
+          "deploy/test-sync-boundaries.ps1"
+        ]
+      }
+    },
+    {
+      "id": "context-budget",
+      "description": "Audits baseline, runtime configuration, skill, agent, and anchor line budgets.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/scripts/audit-context-budget.ps1",
+        "evidence": [
+          "src/scripts/invoke-verification-gate.ps1"
+        ]
+      }
+    },
+    {
+      "id": "bounded-task-contract",
+      "description": "Creates one registered TaskRoot per normalized task intent, rejects caller-selected ID changes that duplicate an active intent, requires explicit root transitions, and defines objective, scope, budgets, checks, approvals, and an empty-safe baseline.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-control-plane.ps1",
+        "evidence": [
+          "src/harness-evals/test-control-plane.ps1"
+        ]
+      }
+    },
+    {
+      "id": "resumable-job-state",
+      "description": "Persists monotonic task state, attempt identity, budgets, verification references, blockers, and one next action.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-control-plane.ps1",
+        "evidence": [
+          "src/harness-evals/test-control-plane.ps1"
+        ]
+      }
+    },
+    {
+      "id": "safe-command-evidence",
+      "description": "Runs bounded commands with real exits, finite timeouts, output hashes, and idempotency metadata.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-control-plane.ps1",
+        "evidence": [
+          "src/harness-evals/test-control-plane.ps1"
+        ]
+      }
+    },
+    {
+      "id": "causal-verification",
+      "description": "Binds command evidence to source/test/protected hashes and requires acceptance criteria to match passed IDs in a structured test-result artifact.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-verification-plane.ps1",
+        "evidence": [
+          "src/harness-evals/test-verification-plane.ps1"
+        ]
+      }
+    },
+    {
+      "id": "attempt-truth",
+      "description": "Derives attempt input/workspace hashes and side effects for successful and failed operations, rejects incomplete terminal observations, persists immutable outcomes, and renders every failure, recovery, and passed-after-retry state.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-attempt-ledger.ps1",
+        "evidence": [
+          "src/harness-evals/test-attempt-ledger.ps1"
+        ]
+      }
+    },
+    {
+      "id": "completion-gate",
+      "description": "Generates a canonical completion claim, validates causal evidence, rejects maker self-verification, and remains checking while checker identity lacks trusted external attestation.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-verification-plane.ps1",
+        "evidence": [
+          "src/harness-evals/test-verification-plane.ps1"
+        ]
+      }
+    },
+    {
+      "id": "trusted-checker-attestation",
+      "description": "Promotes evidence-valid checking state to verified only when a live native or human authority proves checker identity outside project-local self-reporting.",
+      "implementation_status": "declared",
+      "availability": "unverified",
+      "enforcement_mode": "unverified",
+      "verification": {
+        "script": "src/scripts/probe-native-surfaces.ps1",
+        "evidence": []
+      }
+    },
+    {
+      "id": "execution-provenance",
+      "description": "Rejects incomplete governance chains by checking TaskRoot identity plus canonical producer hashes for contract, ledger, report, claim, envelope, test-result, and decision artifacts; hashes are audit metadata, not external identity attestation.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-execution-provenance.ps1",
+        "evidence": [
+          "src/harness-evals/test-execution-provenance.ps1"
+        ]
+      }
+    },
+    {
+      "id": "maker-checker-contract",
+      "description": "Separates maker, test author, test runner, reviewer, and human publication authority.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "policy-only",
+      "verification": {
+        "script": "src/harness-evals/test-governance-contracts.ps1",
+        "evidence": [
+          "src/harness-evals/test-governance-contracts.ps1"
+        ]
+      }
+    },
+    {
+      "id": "behavioral-regressions",
+      "description": "Runs deterministic truth, control, verification, and governance regression cases.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/run-harness-evals.ps1",
+        "evidence": [
+          "src/harness-evals/run-harness-evals.ps1"
+        ]
+      }
+    },
+    {
+      "id": "desktop-pretool-hook-probe",
+      "description": "Historical v3 host loading was observed. The v4 candidate uses bounded Tool Operations and opt-in guarded admission; candidate live loading remains pending.",
+      "implementation_status": "implemented",
+      "availability": "unverified",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1",
+          "docs/live-hook-probe-20260906.md"
+        ]
+      }
+    },
+    {
+      "id": "desktop-run-command-sentinel-deny",
+      "description": "Retains exact-token deny. Historical v3 side-effect denial was observed; v4 candidate requires fresh host acceptance.",
+      "implementation_status": "implemented",
+      "availability": "unverified",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1",
+          "docs/live-sentinel-deny-20260906.md"
+        ]
+      }
+    },
+    {
+      "id": "desktop-posttool-correlation",
+      "description": "Atomic per-operation callback history with unresolved/unclassified states and explicit duplicates; current candidate host acceptance pending.",
+      "implementation_status": "implemented",
+      "availability": "unverified",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1"
+        ]
+      }
+    },
+    {
+      "id": "desktop-core-tool-observation",
+      "description": "Core tool matcher retained; v4 callbacks store allowlisted metadata and do not claim semantic acceptance. Historical seven-tool evidence is not candidate verification.",
+      "implementation_status": "implemented",
+      "availability": "unverified",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1",
+          "docs/live-host-result-classification-20260908.md"
+        ]
+      }
+    },
+    {
+      "id": "desktop-hook-session-audit",
+      "description": "Read-only session projection surfaces empty/corrupt/pending/missing evidence and never reads transcripts; completed operation is not accepted task.",
+      "implementation_status": "implemented",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1"
+        ]
+      }
+    },
+    {
+      "id": "desktop-run-command-result-classification",
+      "description": "Command Post without trustworthy process evidence stays unclassified. Output text is not parsed as a trusted exit; requested, child and host codes remain distinct unknowns.",
+      "implementation_status": "implemented",
+      "availability": "unverified",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1",
+          "docs/live-core-tool-observation-20260908.md",
+          "docs/live-host-result-classification-20260908.md"
+        ]
+      }
+    },
+    {
+      "id": "desktop-session-task-binding",
+      "description": "Opt-in project guarded policy with versioned expiring/revocable/narrowing Binding, fresh Contract/Attempt checks and conservative alias denial. Same-user bypass and host TOCTOU remain.",
+      "implementation_status": "implemented",
+      "availability": "unverified",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-desktop-hook-probe.ps1",
+        "evidence": [
+          "src/harness-evals/test-desktop-hook-probe.ps1"
+        ]
+      }
+    },
+    {
+      "id": "desktop-force-ask-admission",
+      "description": "The tested desktop host did not display or enforce a force_ask decision for an unbound write; the call completed and created its file.",
+      "implementation_status": "declared",
+      "availability": "unavailable",
+      "enforcement_mode": "unverified",
+      "verification": {
+        "script": "src/scripts/audit-desktop-hook-session.ps1",
+        "evidence": [
+          "docs/live-session-binding-force-ask-failure-20260908.md"
+        ]
+      }
+    },
+    {
+      "id": "native-antigravity-surfaces",
+      "description": "Covers ask_question, Planning Mode, manage_task, schedule, reactive wakeup, and native subagents only after a live canary proves them.",
+      "implementation_status": "declared",
+      "availability": "unverified",
+      "enforcement_mode": "policy-only",
+      "verification": {
+        "script": "src/scripts/probe-native-surfaces.ps1",
+        "evidence": []
+      }
+    },
+    {
+      "id": "tier1-policy-pack",
+      "description": "Moves the full Reliable Maker lifecycle and completion policy from globally loaded GEMINI.md into an on-demand skill while keeping a small router global.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "policy-only",
+      "verification": {
+        "script": "src/harness-evals/test-governance-contracts.ps1",
+        "evidence": [
+          "src/harness-evals/test-governance-contracts.ps1"
+        ]
+      }
+    },
+    {
+      "id": "conditional-tier1-loading",
+      "description": "A fresh-session multi-step write Canary autonomously discovered and read reliable-maker-control; behavior is live-observed once and remains policy-only rather than host-enforced.",
+      "implementation_status": "verified",
+      "availability": "available",
+      "enforcement_mode": "policy-only",
+      "verification": {
+        "script": "src/harness-evals/test-governance-contracts.ps1",
+        "evidence": [
+          "docs/live-canary-20260905.md"
+        ]
+      }
+    },
+    {
+      "id": "adaptive-model-routing",
+      "description": "Selects a model or thinking tier only from runtime-observed availability and records the choice; hard-coded model claims remain unverified.",
+      "implementation_status": "declared",
+      "availability": "unverified",
+      "enforcement_mode": "policy-only",
+      "verification": {
+        "script": "src/scripts/probe-native-surfaces.ps1",
+        "evidence": []
+      }
+    },
+    {
+      "id": "desktop-strict-isolation",
+      "description": "Strict refuses registration until an independent OS execution and control-plane boundary is established; not implemented by rule files.",
+      "implementation_status": "declared",
+      "availability": "unavailable",
+      "enforcement_mode": "unverified",
+      "verification": {
+        "script": "src/harness-evals/test-v4-policy.ps1",
+        "evidence": [
+          "docs/v4-requirements.md"
+        ]
+      }
+    },
+    {
+      "id": "knowledge-gate-adapter",
+      "description": "Optional mechanically checked canonical Knowledge Gate. Native media semantics and external authority are not verified; real vault installation not performed.",
+      "implementation_status": "implemented",
+      "availability": "available",
+      "enforcement_mode": "script-enforced",
+      "verification": {
+        "script": "src/harness-evals/test-v4-knowledge.ps1",
+        "evidence": [
+          "docs/v4-knowledge-gate.md"
+        ]
+      }
+    }
+  ],
+  "collaboration": {
+    "schema": "project-agent-handoff-v1",
+    "implementation_status": "implemented",
+    "native_activation": "unverified",
+    "policy": "antigravity-strict; no verification reduction",
+    "entrypoint": "scripts/invoke-antigravity-handoff.ps1",
+    "shared_acceptance": "unverified",
+    "automatic_cross_task_cache": false
+  }
+}

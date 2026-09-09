@@ -1,0 +1,473 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity-harness.local/schemas/verification-envelope.schema.json",
+  "title": "Antigravity Verification Envelope",
+  "description": "Tamper-evident, bounded verification evidence bound to a specific workspace state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "attempt_id",
+    "name",
+    "status",
+    "created_at",
+    "completed_at",
+    "project",
+    "command",
+    "tests",
+    "acceptance_criteria",
+    "requirements",
+    "inputs",
+    "protected",
+    "workspace",
+    "failures",
+    "script_sha256"
+  ],
+  "properties": {
+    "schema": {
+      "const": "antigravity-verification-envelope-v2"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "root_sha256"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "root_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "sha256",
+        "execution",
+        "exit_code",
+        "timed_out",
+        "launch_failed",
+        "duration_ms",
+        "timeout_seconds",
+        "output_sha256",
+        "output_lines",
+        "stdout_sha256",
+        "stdout_lines",
+        "stderr_sha256",
+        "stderr_lines"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "execution": {
+          "enum": [
+            "ran",
+            "skipped-preflight"
+          ]
+        },
+        "exit_code": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "launch_failed": {
+          "type": "boolean"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "output_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "output_lines": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stdout_lines": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stderr_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stderr_lines": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "tests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_collection",
+        "collection_observed",
+        "collected_count",
+        "collection_source"
+        ,"structured_required",
+        "result_path",
+        "result_sha256",
+        "result_schema",
+        "case_results",
+        "passed_case_ids"
+      ],
+      "properties": {
+        "require_collection": {
+          "type": "boolean"
+        },
+        "collection_observed": {
+          "type": "boolean"
+        },
+        "collected_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "collection_source": {
+          "enum": [
+            "explicit-marker",
+            "pytest",
+            "jest",
+            "pester",
+            "generic-passed",
+            "not-observed"
+            ,"structured-result"
+          ]
+        },
+        "structured_required": {"type": "boolean"},
+        "result_path": {"type": ["string", "null"]},
+        "result_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "result_schema": {"type": ["string", "null"]},
+        "case_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "status"],
+            "properties": {
+              "id": {"type": "string"},
+              "status": {"enum": ["passed", "failed", "skipped"]}
+            }
+          }
+        },
+        "passed_case_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_paths",
+        "test_paths",
+        "protected_paths",
+        "satisfied"
+      ],
+      "properties": {
+        "source_paths": {
+          "$ref": "#/$defs/pathRequirement"
+        },
+        "test_paths": {
+          "$ref": "#/$defs/pathRequirement"
+        },
+        "protected_paths": {
+          "$ref": "#/$defs/pathRequirement"
+        },
+        "satisfied": {
+          "type": "boolean"
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "after",
+        "stale",
+        "stale_paths"
+      ],
+      "properties": {
+        "before": {
+          "$ref": "#/$defs/inputSnapshot"
+        },
+        "after": {
+          "$ref": "#/$defs/inputSnapshot"
+        },
+        "stale": {
+          "type": "boolean"
+        },
+        "stale_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "protected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "before_sha256",
+        "after",
+        "after_sha256",
+        "changed",
+        "changed_paths"
+      ],
+      "properties": {
+        "before": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pathDigest"
+          }
+        },
+        "before_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "after": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pathDigest"
+          }
+        },
+        "after_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "changed_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "excluded_roots",
+        "before_sha256",
+        "before_files",
+        "after_sha256",
+        "after_files",
+        "changed"
+      ],
+      "properties": {
+        "algorithm": {
+          "enum": [
+            "git-content-v1",
+            "filesystem-content-v1"
+          ]
+        },
+        "excluded_roots": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "before_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "before_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "after_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "failures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "script_sha256": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "pathRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "declared_count",
+        "missing"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "declared_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pathDigest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "type",
+        "sha256",
+        "files",
+        "bytes"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "file",
+            "directory",
+            "missing",
+            "error"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^$|^[a-f0-9]{64}$"
+        },
+        "files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "inputSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "source_sha256",
+        "tests",
+        "tests_sha256"
+      ],
+      "properties": {
+        "source": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pathDigest"
+          }
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pathDigest"
+          }
+        },
+        "tests_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

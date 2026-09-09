@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity-harness.local/schemas/tool-event.schema.json",
+  "title": "Antigravity Harness Tool Event v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "event_id",
+    "operation_id",
+    "attempt_id",
+    "timestamp",
+    "status",
+    "executed",
+    "duplicate_prevented",
+    "timed_out",
+    "exit_code",
+    "duration_ms",
+    "command_fingerprint",
+    "idempotency_key_sha256",
+    "working_directory_sha256",
+    "stdout_sha256",
+    "stderr_sha256",
+    "stdout_bytes",
+    "stderr_bytes",
+    "error_code",
+    "error_summary"
+  ],
+  "properties": {
+    "schema": {
+      "const": "antigravity-harness-tool-event-v2"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "operation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "succeeded",
+        "failed",
+        "timed_out",
+        "start_failed"
+      ]
+    },
+    "executed": {
+      "type": "boolean"
+    },
+    "duplicate_prevented": {
+      "type": "boolean"
+    },
+    "timed_out": {
+      "type": "boolean"
+    },
+    "exit_code": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "duration_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "command_fingerprint": {
+      "$ref": "#/$defs/sha256"
+    },
+    "idempotency_key_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "working_directory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "stdout_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "stderr_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "stdout_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "stderr_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "error_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 128
+    },
+    "error_summary": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1024
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

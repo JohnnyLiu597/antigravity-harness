@@ -1,0 +1,25 @@
+{
+    "schema_version":  "4.0",
+    "task_id":  "knowledge-fixture",
+    "input_source_ids":  [
+                             "s1"
+                         ],
+    "observations":  [
+                         {
+                             "observed_sha256":  "cc6367267ece74a57946b4e7c2e2be9c3123ce0328695b5b0c9158abddeffa2b",
+                             "capability":  "text",
+                             "source_id":  "s1",
+                             "transcript_path":  "",
+                             "original_read":  true,
+                             "full_coverage":  false,
+                             "complete_transcript":  false,
+                             "timestamps":  [
+                                                0,
+                                                5
+                                            ]
+                         }
+                     ],
+    "output_requirements":  [
+                                "claims with evidence"
+                            ]
+}

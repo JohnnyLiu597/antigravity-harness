@@ -1,0 +1,16 @@
+{
+    "schema_version":  "4.0",
+    "task_id":  "knowledge-fixture",
+    "results":  [
+                    {
+                        "outcome":  "supported",
+                        "evidence_paths":  [
+                                               "original.txt"
+                                           ],
+                        "external_evidence_paths":  [
+
+                                                    ],
+                        "claim_id":  "c1"
+                    }
+                ]
+}

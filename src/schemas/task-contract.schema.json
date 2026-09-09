@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity-harness.local/schemas/task-contract.schema.json",
+  "title": "Antigravity Harness Task Contract v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "producer_script_sha256",
+    "contract_id",
+    "created_at",
+    "status",
+    "objective",
+    "non_goals",
+    "scope",
+    "change_budget",
+    "required_checks",
+    "approval_triggers"
+    ,"baseline"
+  ],
+  "properties": {
+    "schema": {
+      "const": "antigravity-harness-task-contract-v2"
+    },
+    "producer_script_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "contract_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "draft"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "non_goals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024
+      },
+      "uniqueItems": true
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_root",
+        "access",
+        "allowed_paths",
+        "denied_paths"
+      ],
+      "properties": {
+        "project_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "access": {
+          "enum": [
+            "read_only",
+            "write"
+          ]
+        },
+        "allowed_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relativePath"
+          },
+          "uniqueItems": true
+        },
+        "denied_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relativePath"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "change_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_files",
+        "max_added_lines",
+        "dependency_changes",
+        "architecture_changes"
+      ],
+      "properties": {
+        "max_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_added_lines": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dependency_changes": {
+          "type": "boolean"
+        },
+        "architecture_changes": {
+          "type": "boolean"
+        }
+      }
+    },
+    "required_checks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "uniqueItems": true
+    },
+    "approval_triggers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+      },
+      "uniqueItems": true
+    },
+    "baseline": {
+      "type": "object",
+      "required": ["workspace_sha256", "files", "excluded_roots"],
+      "properties": {
+        "workspace_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "sha256", "lines"],
+            "properties": {
+              "path": {"type": "string"},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "lines": {"type": "integer", "minimum": 0}
+            }
+          }
+        },
+        "excluded_roots": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?![\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$)).+$"
+    }
+  }
+}
